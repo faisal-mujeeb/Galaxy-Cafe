@@ -1,0 +1,76 @@
+<aside class="site__drawer drawer_left" id="drawerLeft">
+    <ul class="drawer-menu-list">
+        <% if(user && user.role !== 'admin') {%>
+        <li class="inactive">
+            <a href="#">
+
+                <span class="material-icons">
+                    gps_fixed
+                </span>
+
+                Track Current Order
+            </a>
+        </li>
+        <% } %>
+        <% if(user && user.role === 'admin') {%>
+        <li>
+            <a href="/admin/orders/all">
+                <span class="material-icons">
+                    history
+                </span>
+                Order History</a>
+        </li>
+        <% } %>
+        <% if(user && user.role !== 'admin') {%>
+        <li>
+            <a href="/orders">
+                <span class="material-icons">
+                    history
+                </span>
+                Order History</a>
+        </li>
+        <% } %>
+        <li>
+            <a href="/">
+                <span class="material-icons-outlined">
+                    home
+                </span>
+                Home</a>
+        </li>
+        <li class="inactive">
+            <a href="#">
+                <span class="material-icons">
+                    card_giftcard
+                </span>
+                Deals & Offers</a>
+        </li>
+        <li>
+            <a href="/menus">
+                <span class="material-icons">
+                    import_contacts
+                </span>
+                Menu</a>
+        </li>
+        <li class="inactive">
+            <a href="#">
+                <span class="material-icons">
+                    today
+                </span>
+                Everyday Value offers</a>
+        </li>
+        <li class="inactive">
+            <a href="#">
+                <span class="material-icons-outlined">
+                    receipt_long
+                </span>
+                Terms & Conditions</a>
+        </li>
+        <li class="inactive">
+            <a href="#">
+                <span class="material-icons-outlined">
+                    feedback
+                </span>
+                Feedback</a>
+        </li>
+    </ul>
+</aside>

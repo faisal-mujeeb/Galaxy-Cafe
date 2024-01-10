@@ -1,0 +1,221 @@
+.admin.orders {
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    a {
+      font-weight: normal;
+      color: var(--green);
+      font-size: 16px;
+    }
+  }
+}
+.active-orders-table {
+  height: calc(100vh - 120px);
+  overflow: auto;
+  overflow: -moz-scrollbars-none;
+  -ms-overflow-style: none;
+  width: 100%;
+  margin-top: 40px;
+
+  &::-webkit-scrollbar {
+    width: 0 !important;
+  }
+
+  .table-header {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 60px 140px 240px minmax(540px, 40vw) 200px 320px 160px;
+    z-index: 2;
+
+    > div {
+      padding: 15px 10px;
+      font-weight: 600;
+      font-size: 15px;
+      border-bottom: 2px solid #aaa;
+      background-color: var(--page-background);
+    }
+  }
+
+  .table-body {
+    .tr {
+      display: grid;
+      grid-template-columns: 60px 140px 240px minmax(540px, 40vw) 200px 320px 160px;
+
+      > div {
+        padding: 15px 10px;
+      }
+
+      & + .tr > div {
+        border-top: 1px solid #ddd;
+      }
+
+      .status {
+        span {
+          text-transform: capitalize;
+          border-radius: 30px;
+          padding: 5px 15px;
+          background-color: #aaa;
+          text-align: center;
+          font-size: 14px;
+          font-weight: 600;
+        }
+
+        &.order_placed span {
+          background-color: rgb(248, 184, 81);
+          color: #fff;
+        }
+
+        &.confirmed span {
+          background-color: var(--green);
+          color: #fff;
+        }
+
+        &.preparing span {
+          background-color: var(--green-alt);
+          color: #fff;
+        }
+
+        &.dispatched span {
+          background-color: rgb(var(--primary-color-rgb));
+          color: #fff;
+        }
+
+        &.delivered span {
+          background-color: var(--text-color);
+          color: #fff;
+        }
+
+        &.completed span {
+          background-color: #ddd;
+          color: #555;
+        }
+      }
+      .order-items {
+        .order-item {
+          display: flex;
+          align-items: center;
+          margin-bottom: 8px;
+
+          .food-type {
+            display: inline-block;
+            height: 14px;
+            width: 14px;
+            background-color: #fff;
+            margin-right: 8px;
+            border-radius: 3px;
+            border: 1px solid transparent;
+            position: relative;
+
+            &::after {
+              content: "";
+              position: absolute;
+              left: 2px;
+              top: 2px;
+              height: 8px;
+              width: 8px;
+              border-radius: 50%;
+            }
+
+            &.veg {
+              border-color: var(--green-alt);
+              &::after {
+                background-color: var(--green-alt);
+              }
+            }
+
+            &.nonveg {
+              border-color: rgb(171, 0, 0);
+              &::after {
+                background-color: rgb(171, 0, 0);
+              }
+            }
+          }
+
+          .pizza {
+            font-weight: 600;
+            em {
+              margin-left: 10px;
+              font-weight: 400;
+              font-style: normal;
+              text-transform: capitalize;
+              font-size: 80%;
+              color: var(--text-color);
+
+              & + em::before {
+                content: "|";
+                margin-right: 10px;
+                opacity: 0.6;
+              }
+            }
+          }
+
+          .item {
+            font-weight: 600;
+          }
+
+          .qty {
+            &::before {
+              content: " - ";
+              margin: 0 8px;
+            }
+          }
+        }
+      }
+
+      .act {
+        select {
+          width: 100%;
+          padding: 10px 15px;
+          border: none;
+          border-radius: 3px;
+          -webkit-appearance: none;
+          appearance: none;
+          background: #555 url("/images/right-chevron.png") no-repeat;
+          background-size: 12px;
+          background-position: calc(100% - 10px) center;
+          text-transform: uppercase;
+          font-size: 14px;
+          color: #fff;
+          cursor: pointer;
+        }
+      }
+
+      .u {
+        p {
+          margin: 0 0 4px;
+        }
+        small{
+          word-break: break-all;
+          font-size: 14px;
+        }
+        a {
+          color: rgb(var(--primary-color-rgb));
+          font-size: 14px;
+        }
+      }
+
+      .address {
+        p {
+          margin: 0;
+
+          small {
+            display: block;
+            font-size: 12px;
+            margin-top: 4px;
+          }
+        }
+      }
+    }
+  }
+
+  &.completed {
+    .table-header,
+    .table-body .tr {
+      grid-template-columns: 60px 250px 240px minmax(540px, 40vw) 100px 200px 320px;
+    }
+  }
+}

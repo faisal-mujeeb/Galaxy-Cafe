@@ -1,0 +1,260 @@
+<div class="page checkout">
+  <div class="container">
+    <div class="cart-checkout-wrapper">
+      <div class="cart-menu" id="cartPlaceholder">
+        <% if(session.cart && session.cart.totalQty !== 0) { %>
+        <div class="header">
+          <h3> <span id="cartItemsCounter"><%= session.cart.totalQty %></span> Item(s) you have selected</h3>
+          <a class="explore" href="/menus">Expore Menus</a>
+        </div>
+        <div class="cart-items">
+          <% for(let cartItem of Object.values(session.cart.items) ){ %>
+
+          <% if(Array.isArray(cartItem)) { %>
+          <% cartItem.forEach(pizza => { %>
+          <div class="cart-card item  menu-card-data" data-item='<%= JSON.stringify(pizza)%>'>
+            <figure>
+              <% if(pizza.item.foodType === 'veg') {%> <div class="menu-type veg"></div>
+              <% } else {%> <div class="menu-type non-veg"></div>
+              <% } %>
+              <img src="<%= pizza.item.image %>" alt="">
+            </figure>
+            <div>
+              <div class="info">
+                <div class="details">
+                  <h2> <%= pizza.item.name %></h2>
+                  <p><%= pizza.item.description %></p>
+                  <div class="more">
+                    <span><%= pizza.item.size %> </span>
+                    <span><%= pizza.item.crust %></span>
+                  </div>
+                </div>
+                <div class="price-q">
+                  <h5>&#8377; <%= pizza.item.price * pizza.qty %></h5>
+                  <div class="quantity-control no-add">
+                    <p><%= pizza.qty %> </p>
+                    <button type="button" class="more deleteCartItemBtn">
+                      <span class="material-icons">
+                        delete_outline
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <% if(pizza.item.extra) { %>
+              <div class="custom">
+                <span>Your Customization</span>
+                <p> <strong>Added topping:</strong> Extra Cheese</p>
+              </div>
+              <% } %>
+            </div>
+          </div>
+          <%})%>
+          <%} else { %>
+          <div class="cart-card item  menu-card-data" data-item='<%= JSON.stringify(cartItem)%>'>
+            <figure>
+              <% if(cartItem.item.foodType === 'veg') {%> <div class="menu-type veg"></div>
+              <% } else {%> <div class="menu-type non-veg"></div>
+              <% } %>
+              <img src="<%= cartItem.item.image %>" alt="">
+            </figure>
+            <div>
+              <div class="info">
+                <div class="details">
+                  <h2><%= cartItem.item.name %></h2>
+                  <p><%= cartItem.item.description %></p>
+                </div>
+                <div class="price-q">
+                  <h5>&#8377; <%= cartItem.item.price * cartItem.qty %></h5>
+                  <div class="quantity-control no-add">
+                    <p><%= cartItem.qty %> </p>
+                    <button type="button" class="more deleteCartItemBtn">
+                      <span class="material-icons">
+                        delete_outline
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <% }} %>
+        </div>
+        <div class="additional-menu">
+          <div class="header">
+            <h3>Complete your meal</h3>
+          </div>
+          <div class="meals">
+            <div class="wrapper">
+              <div class="menu-grid">
+                <% menus.map(menu => { %>
+                <div class="additional-menu-item">
+                  <figure>
+                    <% if(menu.foodType === 'veg') {%> <div class="menu-type veg"></div>
+                    <% } else {%> <div class="menu-type non-veg"></div>
+                    <% } %>
+                    <img src="<%= menu.image %>" alt="">
+                    <div class="overlay">
+                      <div><%= menu.name %> <br>&#8377; <%= menu.price %> </div>
+                    </div>
+                  </figure>
+                  <div class="footer">
+                    <button class="btn btn-sm" type="button">
+                      Add
+                    </button>
+                  </div>
+                </div>
+                <% }) %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <% } else { %>
+        <div class="empty-cart">
+          <div class="content">
+            <h2>YOUR CART IS EMPTY
+              <small>
+                Please add some items from the menu.
+              </small>
+            </h2>
+            <p>
+              <a href="/menus" class="btn">Explore Menu</a>
+            </p>
+          </div>
+        </div>
+        <%} %>
+      </div>
+      <div class="side-menu">
+        <div class="checkout-preview" id="checkoutMenu">
+          <div class="header">
+            <h3>Choose a delivery address</h3>
+          </div>
+          <% if(!user) { %>
+          <div class="cart-card thin">
+            <div class="location">
+              <div class="icon">
+                <span class="material-icons">
+                  room
+                </span>
+              </div>
+              <div class="text">
+                <p><span>Select Location</span>
+                  <small>Please select location, so that we can find a restaurant that delivers to
+                    you!</small>
+                </p>
+                <div class="btns">
+                  <button class="btn btn-md locationPickerBtn">Add Location</button>
+                </div>
+              </div>
+            </div>
+            <div class="saved-address">
+              <div class="info">
+                <span class="material-icons">
+                  room
+                </span>
+                <p>Login to use your saved addresses</p>
+                <button class="btn btn-sm">My Address</button>
+              </div>
+            </div>
+          </div>
+          <% } else { %>
+          <div class="cart-card thin">
+            <% if(user.addresses.length === 0) {%>
+            <div class="location">
+              <div class="icon">
+                <span class="material-icons">
+                  room
+                </span>
+              </div>
+              <div class="text">
+                <p><span>Select Location</span>
+                  <small>Please select location, so that we can find a restaurant that delivers to
+                    you!</small>
+                </p>
+                <div class="btns">
+                  <button class="btn btn-md locationPickerBtn">Add Location</button>
+                </div>
+              </div>
+            </div>
+            <% } else { %>
+            <div class="location">
+              <div class="icon">
+                <span class="material-icons">
+                  room
+                </span>
+              </div>
+              <div class="text current">
+                <p><span>Current Address</span>
+                  <% if(user.addresses.length === 1) { %>
+                  <small><%= user.addresses[0].address %> <em><%= user.addresses[0].locality %></em> </small>
+                  <% } else { 
+                      const defaultAddress = user.addresses.filter(a => a['default'] === true);
+                      const current = defaultAddress.length > 0 ? defaultAddress[0]: user.addresses[0];
+                  %>
+                  <small><%= current.address %> <em><%= current.locality %></em> </small>
+                  <% } %>
+                  <!-- <a href="javascript:void(0)" class="editAddressBtn">Edit Address</a> -->
+                </p>
+                <div style="margin: auto;" class="btns">
+                  <button class="btn btn-md change  editAddressBtn">Change</button>
+                </div>
+              </div>
+            </div>
+            <% } %>
+          </div>
+          <% } %>
+          <div class="header">
+            <h3>Offers</h3>
+          </div>
+          <div class="cart-card thin">
+            <div class="redeem">
+              <div class="icon">
+                <span class="material-icons">
+                  redeem
+                </span>
+              </div>
+              <div class="text">
+                <p>Select offer / Apply coupon <small>Get discount with you order</small></p>
+              </div>
+              <div class="icon">
+                <span class="material-icons">
+                  arrow_forward_ios
+                </span>
+              </div>
+            </div>
+          </div>
+          <% if(session.cart && session.cart.totalQty !== 0) { %>
+          <div class="header coPriceBox">
+            <h3>Price Details</h3>
+          </div>
+          <div class="cart-card price coPriceBox">
+            <dl>
+              <dt>Sub Total</dt>
+              <dd>&#8377; <span id="coPrice"><%= session.cart.totalPrice %></span></dd>
+              <dt>Tax</dt>
+              <dd>-</dd>
+              <dt>Discount</dt>
+              <dd>-</dd>
+              <dt>Delivery</dt>
+              <dd>0</dd>
+            </dl>
+            <dl>
+              <dt>Grand Total</dt>
+              <dd>&#8377; <span id="coPriceTotal"><%= session.cart.totalPrice %></span></dd>
+            </dl>
+            <div class="cta">
+              <% if(!user) { %>
+              <a class="btn" href="/login" type="button">Login to Order</a>
+              <% } else { %>
+              <form action="/orders" method="POST">
+                <button class="btn" id="placeOrderBtn" type="submit">Place Order</button>
+              </form>
+              <% } %>
+            </div>
+          </div>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

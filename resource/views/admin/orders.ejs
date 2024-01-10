@@ -1,0 +1,22 @@
+<div class="page orders admin">
+    <div class="container">
+        <div class="header">
+            Current Orders
+            <a href="/admin/orders/all">View All Orders</a>
+        </div>
+        <% if(orders.length > 0) { %>
+        <div class="active-orders-table">
+            <div class="table-header">
+                <div>#</div>
+                <div>Status</div>
+                <div>Placed At</div>
+                <div>Order Items</div>
+                <div>Customer Details</div>
+                <div>Address</div>
+                <div></div>
+            </div>
+            <div class="table-body" id="adminOrderTableBody"></div>
+        </div>
+        <% } %>
+    </div>
+</div>
